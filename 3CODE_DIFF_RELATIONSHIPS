@@ -1,0 +1,128 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Original data
+data = {
+    'Campaign': ['Campaign 1', 'Campaign 2', 'Campaign 3', 'Campaign 4', 'Campaign 5'],
+    'Likes': [100, 150, 80, 120, 200],
+    'Comments': [20, 15, 10, 18, 25],
+    'Shares': [50, 30, 20, 40, 60],
+    'Revenue': [500, 600, 400, 550, 700]
+}
+
+df = pd.DataFrame(data)
+
+# Generate 80 additional rows through random sampling
+additional_rows = pd.DataFrame(columns=df.columns)
+
+for _ in range(80):
+    random_campaign = np.random.choice(df['Campaign'])
+    random_likes = np.random.randint(80, 201)
+    random_comments = np.random.randint(10, 26)
+    random_shares = np.random.randint(20, 61)
+    random_revenue = np.random.randint(400, 701)
+
+    new_row = pd.DataFrame([[random_campaign, random_likes, random_comments, random_shares, random_revenue]],
+                           columns=df.columns)
+    additional_rows = additional_rows.append(new_row, ignore_index=True)
+
+# Concatenate the original data with the additional rows
+expanded_data = pd.concat([df, additional_rows], ignore_index=True)
+
+print(type(expanded_data))
+
+plt.scatter(expanded_data["Likes"], expanded_data["Revenue"])
+#GENERATE A SCATTER PLOT WITH NO RELATION BETWEEN VARIABLES
+
+print("2..................................................................................................................")
+
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+
+# Set random seed for reproducibility
+np.random.seed(42)
+
+# Define the pattern and variations for each metric
+likes_pattern = np.linspace(100, 200, 80)
+comments_pattern = np.linspace(20, 30, 80)
+shares_pattern = np.linspace(50, 60, 80)
+revenue_pattern = likes_pattern * 5 + comments_pattern * 10 + shares_pattern * 7 + np.random.normal(0, 50, 80)
+
+# Create the DataFrame
+data = {
+    'Campaign': ['Campaign {}'.format(i) for i in range(1, 81)],
+    'Likes': likes_pattern,
+    'Comments': comments_pattern,
+    'Shares': shares_pattern,
+    'Revenue': revenue_pattern
+}
+
+df = pd.DataFrame(data)
+
+
+plt.scatter(df["Likes"], df["Revenue"])
+#GENERATE A SCATTER PLOT WITH POSITIVE RELATION BETWEEN VARIABLES
+
+
+
+print("3..................................................................................................................")
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+# Initial data
+data = {
+    'Campaign': ['Campaign 1', 'Campaign 2', 'Campaign 3', 'Campaign 4', 'Campaign 5'],
+    'Likes': [100, 150, 80, 120, 200],
+    'Comments': [20, 15, 10, 18, 25],
+    'Shares': [50, 30, 20, 40, 60],
+    'Revenue': [500, 600, 400, 550, 700]
+}
+
+df = pd.DataFrame(data)
+
+# Set a seed for reproducibility
+np.random.seed(42)
+
+# Generate additional rows
+num_rows = 80  # Number of additional rows to generate
+multiplier = 10  # Controls the pattern of the generated data
+
+additional_data = {
+    'Campaign': [],
+    'Likes': [],
+    'Comments': [],
+    'Shares': [],
+    'Revenue': []
+}
+
+for i in range(num_rows):
+    campaign_num = i + 6
+    likes = np.random.randint(50, 250)
+    comments = np.random.randint(5, 30)
+    shares = np.random.randint(10, 70)
+    
+    # Generate revenue with a pattern and add outliers
+    if i % 10 == 0:  # Outlier every 10 rows
+        revenue = np.random.randint(2000, 5000)
+    else:
+        revenue = likes * multiplier + np.random.randint(-1000, 1000)
+    
+    additional_data['Campaign'].append(f'Campaign {campaign_num}')
+    additional_data['Likes'].append(likes)
+    additional_data['Comments'].append(comments)
+    additional_data['Shares'].append(shares)
+    additional_data['Revenue'].append(revenue)
+
+# Create the additional DataFrame
+additional_df = pd.DataFrame(additional_data)
+
+# Combine the initial DataFrame and the additional DataFrame
+combined_df = pd.concat([df, additional_df], ignore_index=True)
+
+plt.scatter(combined_df["Likes"], combined_df["Revenue"])
+#GENERATE A SCATTER PLOT WITH WEAK POSITIVE RELATION BETWEEN VARIABLES
